@@ -1,0 +1,106 @@
+SELECT * FROM patients;
+
+/*
+  Start by selecting a question by pressing 'Start' or 'View All Questions'.
+  Use the resources and information about the database from the left panel to help.
+  Press the run button to execute the query.
+  Question is automatically validated every time you execute the query.
+  Make your output match the expected output.
+ 
+  If you can't solve a question you can press 'Skip Question' to view the solution.
+ 
+  Keybinds:
+    [ctrl + enter]: Execute the SQL
+    [ctrl + q]: Auto-format the SQL
+*/
+SELECT first_name, last_name, gender
+from patients
+where gender = 'M';
+
+SELECT first_name, last_name
+FROM patients
+WHERE allergies is NULL;
+
+SELECT first_name
+FROM patients
+WHERE first_name like "C%";
+
+SELECT first_name, last_name
+FROM patients
+Where weight between 100 AND 120;
+
+UPDATE patients
+SET allergies = 'NKA'
+Where allergies IS NULL;
+
+SELECT CONCAT(first_name,' ', last_name) AS full_name
+FROM patients;
+
+select pa.first_name, pa.last_name, pr.province_name
+FROM patients AS pa
+LEFT Join province_names as pr
+ON (pa.province_id = pr.province_id);
+
+SELECT COUNT()
+FROM patients
+Where(YEAR(birth_date) = '2010');
+
+SELECT count(birth_date)
+FROM patients
+where YEAR(birth_date) in (2010); 
+
+SELECT * FROM patients;
+
+SELECT first_name, last_name, MAX(height) as height
+FROM patients; 
+
+SELECT distinct YEAR(birth_date)
+FROM patients
+ORDER BY birth_date;
+
+Select first_name
+FROM (SELECT first_name, COUNT(first_name) AS "count"
+from patients
+group by first_name) 
+wHERE "count" = 1;
+
+select patient_id, first_name
+FROM patients
+WHERE first_name LIKE 's____%s';
+
+SELECT p.patient_id, p.first_name, p.last_name
+FROM patients AS p
+left join admissions AS a
+ON (p.patient_id = a.patient_id)
+WHERE a.diagnosis = 'Dementia';
+
+SELECT *
+FROM admissions;
+
+SELECT first_name
+from patients
+ORDER BY length(first_name), first_name;
+
+select
+(Select COUNT(gender)
+FROM patients
+WHERE gender = 'M') as 'male_count',
+(select count(gender)
+ FROM patients
+ where gender='F') as 'female_count';
+ 
+ SELECT
+ (SELECT COUNT(*)
+ FROM patients
+ Where gender='M') AS 'male_count',
+(SELECT COUNT(*)
+ FROM patients
+ WHERE gender='F') AS 'female_count';
+ 
+ SELECT first_name, last_name, allergies
+ FROM patients
+ WHERE allergies = 'Morphine' OR allergies = 'Penicillin'
+ ORDER BY
+ 	allergies,
+    first_name,
+    last_name;
